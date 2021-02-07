@@ -24,6 +24,5 @@ Robot Framework/SeleniumLibrary framework for testing e-commerce page (http://tu
 * `REMOTE` -> If test should be run on Selenium Grid
 * `WAIT` -> Default wait/timeout
 
-## additional remarks
 Screenshots folder is set up in [SuiteSetup.robot](/Resources/SuiteSetup.robot):</br>
 `Set Screenshot Directory    Screenshots`
