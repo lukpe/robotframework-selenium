@@ -11,6 +11,8 @@ ${view_cart}    View Cart
 ${nav_bar}    class:nav.navbar-nav
 ${search_bar}    name:search
 ${search_button}    class:btn.btn-default.btn-lg
+${categories}    xpath://ul[@class='nav navbar-nav']/li/a
+${category_header}    css:h2
 
 *** Keywords ***
 Check Homepage Elements
@@ -26,4 +28,18 @@ Search ${product}
     ${details}    Get Test Product Details    ${product}    
     Input Text    ${search_bar}    ${details}[name]
     Click Button    ${search_button}
-    Verify Search Results    ${details}[name]    ${details}[price]    
+    Wait Until Page Contains    Search - ${details}[name]
+    Verify Product Details    ${product}
+    
+Select Category
+    [Arguments]    ${name}
+    @{categories}    Get WebElements    ${categories}
+    ${found}    Set Variable    ${False}
+    FOR    ${category}    IN    @{categories}
+        ${text}    Get Text    ${category}
+        ${found}    Evaluate    """${text}""" == """${name}"""    
+        Run Keyword If    ${found}    Click Element    ${category}
+        Exit For Loop If    ${found}       
+    END
+    Should Be True    ${found}
+    

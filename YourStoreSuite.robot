@@ -22,7 +22,7 @@ Search Test
 Found Page And Cart Test
     [Documentation]    Adding a product to the cart from the search results page
     [Tags]    Search SearchResults    CartPage
-    Set Test Variable    ${product}    Smartphone
+    Set Test Variable    ${product}    Smartphone1
     Search ${product}
     Add Found ${product} To Cart
     Verify Cart Contents    ${product}
@@ -36,3 +36,13 @@ Product Page And Cart Test
     Verify ${product} Page    
     Add Product To Cart
     Verify Cart Contents    ${product}
+    
+Product Category Test
+    [Documentation]    Checking if appropriate products ale listed under a category
+    [Tags]    Categories
+    Set Test Variable    ${category}    Phones & PDAs
+    Select Category    ${category}
+    Verify Product Details    Smartphone1
+    Verify Product Details    Smartphone2
+    Verify Product Details    Smartphone3
+    
