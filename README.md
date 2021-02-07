@@ -18,7 +18,7 @@ Robot Framework/SeleniumLibrary framework for testing e-commerce page (http://tu
 ## configuration
 [SuiteVariables.py](/Resources/SuiteVariables.py):
 * `URL` -> AUT URL address
-* `BROWSER` -> web browser to run tests on (e.g. `chrome, gc, firefox, ff`)
+* `BROWSER` -> web browser to run tests on (e.g. `chrome`, `gc`, `firefox`, `ff`)
 * `HUB` -> [Selenium Grid](https://www.selenium.dev/documentation/en/grid/) hub url
 * `DESIRED_CAPABILITIES` -> used in grid tests
 * `REMOTE` -> If test should be run on Selenium Grid
