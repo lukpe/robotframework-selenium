@@ -1,0 +1,9 @@
+.idea/
+.project
+.pydevproject
+Screenshots/
+libspecs/
+*.html
+*.xml
+__pycache__/
+*.py[cod]
