@@ -1,10 +1,10 @@
 from robot.api.deco import keyword, library
 
 @keyword
-def get_test_product_details(product='Camera'):
+def get_test_product_details(product='Camera1'):
     
     products = {
-        'Camera':{
+        'Camera1':{
             'name':'Canon EOS 5D',
             'price':'$98.00'
         },
@@ -20,9 +20,13 @@ def get_test_product_details(product='Camera'):
             'name':'Palm Treo Pro',
             'price':'$337.99'
         },
-        'Tablet':{
+        'Tablet1':{
             'name':'Samsung Galaxy Tab',
             'price':'$241.99'
+        },
+        'Monitor1':{
+            'name':'Samsung SyncMaster 941BW',
+            'price':'$242.00'
         }
     }
     
