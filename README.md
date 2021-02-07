@@ -1,5 +1,7 @@
 # robotframework-selenium
-Robot Framework/SeleniumLibrary framework for testing e-commerce page (http://tutorialsninja.com/demo/)
+[Robot Framework]: https://robotframework.org
+[SeleniumLibrary]: https://robotframework.org/SeleniumLibrary/SeleniumLibrary.html
+[Robot Framework]/[SeleniumLibrary] framework for testing e-commerce page (http://tutorialsninja.com/demo/)
 
 ## requirements
 * [Python](https://www.python.org/downloads/) (tested on version 3.9.1)
@@ -9,7 +11,7 @@ Robot Framework/SeleniumLibrary framework for testing e-commerce page (http://tu
 1. Install required libraries:</br>
 `pip install -r requirements.txt`
 
-2. Download chromedriver using webdrivermanager:</br>
+2. Download chromedriver using [webdrivermanager](https://pypi.org/project/webdrivermanager/):</br>
 `webdrivermanager chrome`
 
 3. Run the test suite:</br>
