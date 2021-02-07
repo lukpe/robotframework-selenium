@@ -1,0 +1,4 @@
+robotframework>=3.2.2
+robotframework-faker>=5.0.0
+robotframework-seleniumlibrary>=4.5.0
+webdrivermanager>=0.9.0
