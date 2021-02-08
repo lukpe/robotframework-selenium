@@ -11,10 +11,7 @@
 1. Install required libraries:</br>
 `pip install -r requirements.txt`
 
-2. Download chromedriver using [webdrivermanager](https://pypi.org/project/webdrivermanager/):</br>
-`webdrivermanager chrome`
-
-3. Run the test suite:</br>
+2. Run the test suite:</br>
 `robot YourStoreSuite.robot`
 
 ## configuration
