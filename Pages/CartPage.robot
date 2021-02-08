@@ -85,7 +85,9 @@ Proceed Guest Purchase
     Verify and Confirm Order    ${product}
     
 Fill Billing Details
-    ${email}    FakerLibrary.Email    
+    ${email}    FakerLibrary.Email
+    # Firefox fix
+    Scroll Element Into View    ${billing_details}[email]    
     Input Text    ${billing_details}[email]    ${email}
      ${phone}    FakerLibrary.Phone Number
     Input Text    ${billing_details}[phone]    ${phone}
