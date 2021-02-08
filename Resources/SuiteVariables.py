@@ -1,5 +1,5 @@
 URL = 'http://tutorialsninja.com/demo/'
-BROWSER = 'gc'
+BROWSER = 'chrome'
 ALIAS = 'None'
 HUB = 'http://localhost:4444/wd/hub'
 DESIRED_CAPABILITIES = 'platform:LINUX,headless:True'

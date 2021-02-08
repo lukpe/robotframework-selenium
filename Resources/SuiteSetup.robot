@@ -1,5 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
+Library    WebDriverLibrary.py
 Variables    SuiteVariables.py
 
 *** Keywords ***
@@ -12,6 +13,7 @@ Before Suite
     Maximize Browser Window
   
 Local Browser
+    Download Driver    ${BROWSER}
     Open Browser    ${BROWSER_SETINGS}[0]    ${BROWSER_SETINGS}[1]
 
 Remote Browser

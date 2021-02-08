@@ -1,4 +1,4 @@
-from robot.api.deco import keyword, library
+from robot.api.deco import keyword
 
 @keyword
 def get_test_product_details(product='Camera1'):
