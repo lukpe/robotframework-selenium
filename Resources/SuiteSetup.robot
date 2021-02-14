@@ -14,10 +14,10 @@ Before Suite
   
 Local Browser
     Download Driver    ${BROWSER}
-    Open Browser    ${BROWSER_SETINGS}[0]    ${BROWSER_SETINGS}[1]
+    Open Browser   ${URL}    ${BROWSER}    ${ALIAS}
 
 Remote Browser
-    Open Browser    ${BROWSER_SETINGS}[0]    ${BROWSER_SETINGS}[1]    ${BROWSER_SETINGS}[2]    ${BROWSER_SETINGS}[3]    ${BROWSER_SETINGS}[4]
+    Open Browser    ${URL}    ${BROWSER}    ${ALIAS}    ${HUB}    ${DESIRED_CAPABILITIES}
     
 After Suite
     Close Browser
