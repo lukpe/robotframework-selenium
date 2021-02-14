@@ -7,3 +7,6 @@ libspecs/
 *.xml
 __pycache__/
 *.py[cod]
+/.pabotsuitenames
+/geckodriver-*.log
+/pabot_results
