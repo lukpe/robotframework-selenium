@@ -15,7 +15,7 @@ Homepage Test
     Check Homepage Elements
     
 Search Test
-    [Documentation]    Verify product search mechanism //'Camera' is an argument
+    [Documentation]    Verify product search mechanism
     [Tags]    Search
     Search Camera1
     
