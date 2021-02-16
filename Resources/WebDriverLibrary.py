@@ -12,5 +12,6 @@ def download_driver(browser='chrome'):
     
     command = f'webdrivermanager {browser}'
     if platform.system() == 'Linux':
-        command = f'{command} --linkpath ~/.local/bin'
+        link_path = '$HOME/.local/bin'
+        command = f'{command} --linkpath {link_path}'
     os.system(command)
