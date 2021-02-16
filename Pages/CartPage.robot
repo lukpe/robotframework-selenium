@@ -87,7 +87,7 @@ Proceed Guest Purchase
 Fill Billing Details
     ${email}    FakerLibrary.Email
     # Firefox fix
-    Mouse Over    ${billing_details}[email]
+    Scroll Element Into View    ${billing_details}[email]    
     Input Text    ${billing_details}[email]    ${email}
      ${phone}    FakerLibrary.Phone Number
     Input Text    ${billing_details}[phone]    ${phone}
