@@ -144,8 +144,8 @@ Fill Comments
 Verify and Confirm Order
     [Arguments]    ${product}
     ${details}    Get Test Product Details    ${product}
-    Wait Until Element Is Visible    ${table}    
-    Element Text Should Be   ${table_product_name}    ${details}[name]    
+    Wait Until Element Is Visible    ${table}
+    Wait Until Element Contains    ${table_product_name}    ${details}[name]
     # TODO: Changing unit price
     # Element Text Should Be   ${table_unit_price}    ${details}[price]
     Click Button    ${confirm_order}
