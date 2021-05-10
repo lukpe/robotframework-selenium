@@ -1,21 +1,23 @@
 *** Settings ***
+Documentation    Cart page
 Library    SeleniumLibrary
 Library    Collections    
 Library    FakerLibrary    locale=en_US
 Library    ../Resources/TestDataLibrary.py      
 Resource    HomePage.robot
 
+
 *** Variables ***
-${cart_name}    xpath://div[@id='checkout-cart']//tbody//td[2]
-${cart_price}    xpath://div[@id='checkout-cart']//tbody//td[5]
-${checkout}    link:Checkout
+${CART_NAME}    xpath://div[@id='checkout-cart']//tbody//td[2]
+${CART_PRICE}    xpath://div[@id='checkout-cart']//tbody//td[5]
+${CHECKOUT}    link:Checkout
 # *** Step 1: Checkout Options ***
-${radio_guest}    css:input[type='radio'][name='account'][value='guest']
-${radio_register}    css:input[type='radio'][name='account'][value='register']
-${continue_account}    id:button-account
+${RADIO_GUEST}    css:input[type='radio'][name='account'][value='guest']
+${RADIO_REGISTER}    css:input[type='radio'][name='account'][value='register']
+${CONTINUE_ACCOUNT}    id:button-account
 # *** Step 2: Billing Details ***
 # *** Your Personal Details ***
-&{billing_details}    
+&{BILLING_DETAILS}    
 ...    firstname=id:input-payment-firstname
 ...    lastname=id:input-payment-lastname
 ...    email=id:input-payment-email
@@ -29,10 +31,10 @@ ${continue_account}    id:button-account
 ...    country=id:input-payment-country
 ...    zone=id:input-payment-zone
 # My delivery and billing addresses are the same.
-${checkbox_shipping_address}    css:input[type='checkbox'][name='shipping_address']
-${continue_guest}    id:button-guest
+${CHECKBOX_SHIPPING_ADDRESS}    css:input[type='checkbox'][name='shipping_address']
+${CONTINUE_GUEST}    id:button-guest
 # *** Step 3: Delivery Details  ***
-&{shipping_details}
+&{SHIPPING_DETAILS}
 ...    firstname=id:input-shipping-firstname
 ...    lastname=id:input-shipping-lastname
 ...    company=id:input-shipping-company
@@ -42,60 +44,74 @@ ${continue_guest}    id:button-guest
 ...    postcode=id:input-shipping-postcode
 ...    country=id:input-shipping-country
 ...    zone=id:input-shipping-zone
-${continue_guest_shipping}    id:button-guest-shipping
+${CONTINUE_GUEST_SHIPPING}    id:button-guest-shipping
 # *** Step 4: Delivery Method ***
-${comments_shipping}    css:#collapse-shipping-method textarea[name='comment']
-${continue_shipping_method}    id:button-shipping-method
+${COMMENTS_SHIPPING}    css:#collapse-shipping-method textarea[name='comment']
+${CONTINUE_SHIPPING_METHOD}    id:button-shipping-method
 # *** Step 5: Payment Method  ***
-${comments_payment}    css:#collapse-payment-method textarea[name='comment']
+${COMMENTS_PAYMENT}    css:#collapse-payment-method textarea[name='comment']
 # I have read and agree to the Terms & Conditions
-${checkbox_agree}    css:input[type='checkbox'][name='agree']
-${continue_payment_method}    id:button-payment-method
+${CHECKBOX_AGREE}    css:input[type='checkbox'][name='agree']
+${CONTINUE_PAYMENT_METHOD}    id:button-payment-method
 # *** Step 6: Confirm Order ***
-${table}    css:#checkout-checkout table
-${table_product_name}    css:.table.table-bordered.table-hover a
-${table_unit_price}    css:#checkout-checkout tbody td:nth-child(4)
-${confirm_order}    id:button-confirm
-${confirm_message}    xpath://h1[contains(text(),'Your order has been placed!')]
+${TABLE}    css:#checkout-checkout table
+${TABLE_PRODUCT_NAME}    css:.table.table-bordered.table-hover a
+${TABLE_UNIT_PRICE}    css:#checkout-checkout tbody td:nth-child(4)
+${CONFIRM_ORDER}    id:button-confirm
+${CONFIRM_MESSAGE}    xpath://h1[contains(text(),'Your order has been placed!')]
 
 
 *** Keywords ***
 Verify Cart Contents
+    [Documentation]    Verify if selected product is in the shopping cart
     [Arguments]    ${product}
     ${details}    Get Test Product Details    ${product}
     Wait Until Element Contains    ${cart}    ${details}[price]
     Click Element    ${cart}
     Click Link    ${view_cart}
-    Element Should Contain    ${cart_name}    ${details}[name]
-    Element Should Contain    ${cart_price}    ${details}[price]
+    Sleep    1
+    Element Should Contain    ${CART_NAME}    ${details}[name]
+    Element Should Contain    ${CART_PRICE}    ${details}[price]
     
-Proceed Guest Purchase
+Proceed Guest Purchase    # robocop: disable=uneven-indent,too-many-calls-in-keyword
+    [Documentation]    Proceed purchase using guest account
     [Arguments]    ${product}
-    Click Link    ${checkout}
-    Wait Until Element Is Visible    ${radio_guest}    
-    Click Element    ${radio_guest}
-    Click Button    ${continue_account}
+    Click Link    ${CHECKOUT}
+    Set Client Guest
     Fill Billing Details
-    Click Element    ${checkbox_shipping_address}
-    Click Button    ${continue_guest}
-    Fill Address Data    &{shipping_details}
-    Click Button    ${continue_guest_shipping}
+    Click Element    ${CHECKBOX_SHIPPING_ADDRESS}
+    Click Button    ${CONTINUE_GUEST}
+    Fill Address Data    &{SHIPPING_DETAILS}
+    Click Button    ${CONTINUE_GUEST_SHIPPING}
     Fill Delivery Method
     Fill Payment Method
-    Verify and Confirm Order    ${product}
-    
+    Verify And Confirm Order    ${product}
+
+Set Client ${type}
+    [Documentation]    Set client type
+    IF    """${type}""" == """Guest"""
+        Wait Until Element Is Visible    ${RADIO_GUEST}    
+        Click Element    ${RADIO_GUEST}
+    ELSE IF   """${type}""" == """Register""" 
+        Wait Until Element Is Visible    ${RADIO_REGISTER}    
+        Click Element    ${RADIO_REGISTER}
+    END
+    Click Button    ${CONTINUE_ACCOUNT}
+
 Fill Billing Details
+    [Documentation]    Fill billing details
     ${email}    FakerLibrary.Email
     # Firefox fix
-    #Scroll Element Into View    ${billing_details}[email]    
+    # Scroll Element Into View    ${billing_details}[email]    
     Execute Javascript    window.scrollTo(0, document.body.scrollHeight);
     Sleep    1    
     Input Text    ${billing_details}[email]    ${email}
-     ${phone}    FakerLibrary.Phone Number
+    ${phone}    FakerLibrary.Phone Number
     Input Text    ${billing_details}[phone]    ${phone}
-    Fill Address Data    &{billing_details}
+    Fill Address Data    &{BILLING_DETAILS}
 
-Fill Address Data
+Fill Address Data  # robocop: disable=uneven-indent,too-many-calls-in-keyword
+    [Documentation]    Fill client personal and address data
     [Arguments]    &{input}
     Wait Until Element Is Visible    ${input}[firstname]    
     ${firstname}    FakerLibrary.First Name
@@ -118,37 +134,43 @@ Fill Address Data
     Select Random List Option    ${input}[zone]
     
 Select Random List Option
+    [Documentation]    Select random option from a list
     [Arguments]    ${element}
     @{options}    Get List Items    ${element}
     Remove From List    ${options}    0
     ${length}    Get Length    ${options}
-     ${option}    Evaluate    random.choice(${options})    random
-    Run Keyword If    ${length} == 1
-    ...    Select From List By Index    ${element}    1
-    ...    ELSE
-    ...    Select From List By Label    ${element}    ${option}
+    ${option}    Evaluate    random.choice(${options})    random
+    IF    ${length} == 1
+        Select From List By Index    ${element}    1
+    ELSE
+        Select From List By Label    ${element}    ${option}
+    END
            
 Fill Delivery Method
-    Fill Comments    ${comments_shipping}
-    Click Button    ${continue_shipping_method}
+    [Documentation]    Fill delivery method details
+    Fill Comments    ${COMMENTS_SHIPPING}
+    Click Button    ${CONTINUE_SHIPPING_METHOD}
     
 Fill Payment Method
-    Fill Comments    ${comments_payment}
-    Click Element    ${checkbox_agree}    
-    Click Element    ${continue_payment_method}    
+    [Documentation]    Fill paymen method details
+    Fill Comments    ${COMMENTS_PAYMENT}
+    Click Element    ${CHECKBOX_AGREE}    
+    Click Element    ${CONTINUE_PAYMENT_METHOD}    
 
 Fill Comments
+    [Documentation]    Fill comments
     [Arguments]    ${element}
     ${comments}    FakerLibrary.Text
     Wait Until Element Is Visible    ${element}    
     Input Text    ${element}    ${comments}
     
-Verify and Confirm Order
+Verify And Confirm Order
+    [Documentation]    Verify order summary nad confirm the order
     [Arguments]    ${product}
     ${details}    Get Test Product Details    ${product}
-    Wait Until Element Is Visible    ${table}
-    Wait Until Element Contains    ${table_product_name}    ${details}[name]
-    # TODO: Changing unit price
-    # Element Text Should Be   ${table_unit_price}    ${details}[price]
-    Click Button    ${confirm_order}
-    Wait Until Element Is Visible    ${confirm_message}    
+    Wait Until Element Is Visible    ${TABLE}
+    Wait Until Element Contains    ${TABLE_PRODUCT_NAME}    ${details}[name]
+    # FIXME: Changing unit price
+    # Element Text Should Be   ${TABLE_UNIT_PRICE}    ${details}[price]
+    Click Button    ${CONFIRM_ORDER}
+    Wait Until Element Is Visible    ${CONFIRM_MESSAGE}    

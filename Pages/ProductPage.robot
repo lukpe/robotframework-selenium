@@ -1,20 +1,23 @@
 *** Settings ***
+Documentation    Product page
 Library    SeleniumLibrary
 Library    ../Resources/TestDataLibrary.py      
 
+
 *** Variables ***
-${product_header}    xpath://div[@id='content']//h1
-${product_price}    xpath://div[@id='content']/div/div[2]/ul[2]//h2
-${product_to_cart}    id:button-cart
+${PRODUCT_HEADER}    xpath://div[@id='content']//h1
+${PRODUCT_PRICE}    xpath://div[@id='content']/div/div[2]/ul[2]//h2
+${PRODUCT_TO_CART}    id:button-cart
+
 
 *** Keywords ***
 Verify ${product} Page
-    Log    Verifying product page elements
+    [Documentation]    Verify product page elements
     ${details}    Get Test Product Details    ${product}
-    Element Should Contain    ${product_header}    ${details}[name]
-    Element Should Contain    ${product_price}    ${details}[price]
+    Element Should Contain    ${PRODUCT_HEADER}    ${details}[name]
+    Element Should Contain    ${PRODUCT_PRICE}    ${details}[price]
     
 Add Product To Cart
-    Log    Adding the product to cart
-    Click Button    ${product_to_cart}            
-    
+    [Documentation]    Add the product to cart
+    Wait Until Element Is Enabled    ${PRODUCT_TO_CART}
+    Click Button    ${PRODUCT_TO_CART}            
