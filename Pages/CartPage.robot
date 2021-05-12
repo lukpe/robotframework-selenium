@@ -1,9 +1,9 @@
 *** Settings ***
 Documentation    Cart page
 Library    SeleniumLibrary
-Library    Collections    
+Library    Collections
 Library    FakerLibrary    locale=en_US
-Library    ../Resources/TestDataLibrary.py      
+Library    ../Resources/TestDataLibrary.py
 Resource    HomePage.robot
 
 
@@ -17,7 +17,7 @@ ${RADIO_REGISTER}    css:input[type='radio'][name='account'][value='register']
 ${CONTINUE_ACCOUNT}    id:button-account
 # *** Step 2: Billing Details ***
 # *** Your Personal Details ***
-&{BILLING_DETAILS}    
+&{BILLING_DETAILS}
 ...    firstname=id:input-payment-firstname
 ...    lastname=id:input-payment-lastname
 ...    email=id:input-payment-email
@@ -72,7 +72,7 @@ Verify Cart Contents
     Sleep    1
     Element Should Contain    ${CART_NAME}    ${details}[name]
     Element Should Contain    ${CART_PRICE}    ${details}[price]
-    
+
 Proceed Guest Purchase    # robocop: disable=uneven-indent,too-many-calls-in-keyword
     [Documentation]    Proceed purchase using guest account
     [Arguments]    ${product}
@@ -90,10 +90,10 @@ Proceed Guest Purchase    # robocop: disable=uneven-indent,too-many-calls-in-key
 Set Client ${type}
     [Documentation]    Set client type
     IF    """${type}""" == """Guest"""
-        Wait Until Element Is Visible    ${RADIO_GUEST}    
+        Wait Until Element Is Visible    ${RADIO_GUEST}
         Click Element    ${RADIO_GUEST}
-    ELSE IF   """${type}""" == """Register""" 
-        Wait Until Element Is Visible    ${RADIO_REGISTER}    
+    ELSE IF   """${type}""" == """Register"""
+        Wait Until Element Is Visible    ${RADIO_REGISTER}
         Click Element    ${RADIO_REGISTER}
     END
     Click Button    ${CONTINUE_ACCOUNT}
@@ -102,9 +102,9 @@ Fill Billing Details
     [Documentation]    Fill billing details
     ${email}    FakerLibrary.Email
     # Firefox fix
-    # Scroll Element Into View    ${billing_details}[email]    
+    # Scroll Element Into View    ${billing_details}[email]
     Execute Javascript    window.scrollTo(0, document.body.scrollHeight);
-    Sleep    1    
+    Sleep    1
     Input Text    ${billing_details}[email]    ${email}
     ${phone}    FakerLibrary.Phone Number
     Input Text    ${billing_details}[phone]    ${phone}
@@ -113,13 +113,13 @@ Fill Billing Details
 Fill Address Data  # robocop: disable=uneven-indent,too-many-calls-in-keyword
     [Documentation]    Fill client personal and address data
     [Arguments]    &{input}
-    Wait Until Element Is Visible    ${input}[firstname]    
+    Wait Until Element Is Visible    ${input}[firstname]
     ${firstname}    FakerLibrary.First Name
     Input Text    ${input}[firstname]    ${firstname}
     ${lastname}    FakerLibrary.Last Name
-    Input Text    ${input}[lastname]    ${lastname}    
+    Input Text    ${input}[lastname]    ${lastname}
     ${company}    FakerLibrary.Company
-    Input Text    ${input}[company]    ${company}    
+    Input Text    ${input}[company]    ${company}
     ${address1}    FakerLibrary.Address
     Input Text    ${input}[address1]    ${address1}
     ${address2}    FakerLibrary.Address
@@ -132,7 +132,7 @@ Fill Address Data  # robocop: disable=uneven-indent,too-many-calls-in-keyword
     # Wait for 'Region / State' list to load after selecting country
     Sleep    1
     Select Random List Option    ${input}[zone]
-    
+
 Select Random List Option
     [Documentation]    Select random option from a list
     [Arguments]    ${element}
@@ -145,25 +145,25 @@ Select Random List Option
     ELSE
         Select From List By Label    ${element}    ${option}
     END
-           
+
 Fill Delivery Method
     [Documentation]    Fill delivery method details
     Fill Comments    ${COMMENTS_SHIPPING}
     Click Button    ${CONTINUE_SHIPPING_METHOD}
-    
+
 Fill Payment Method
     [Documentation]    Fill paymen method details
     Fill Comments    ${COMMENTS_PAYMENT}
-    Click Element    ${CHECKBOX_AGREE}    
-    Click Element    ${CONTINUE_PAYMENT_METHOD}    
+    Click Element    ${CHECKBOX_AGREE}
+    Click Element    ${CONTINUE_PAYMENT_METHOD}
 
 Fill Comments
     [Documentation]    Fill comments
     [Arguments]    ${element}
     ${comments}    FakerLibrary.Text
-    Wait Until Element Is Visible    ${element}    
+    Wait Until Element Is Visible    ${element}
     Input Text    ${element}    ${comments}
-    
+
 Verify And Confirm Order
     [Documentation]    Verify order summary nad confirm the order
     [Arguments]    ${product}
@@ -173,4 +173,4 @@ Verify And Confirm Order
     # FIXME: Changing unit price
     # Element Text Should Be   ${TABLE_UNIT_PRICE}    ${details}[price]
     Click Button    ${CONFIRM_ORDER}
-    Wait Until Element Is Visible    ${CONFIRM_MESSAGE}    
+    Wait Until Element Is Visible    ${CONFIRM_MESSAGE}

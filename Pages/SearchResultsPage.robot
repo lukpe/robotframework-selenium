@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation    Search results page
 Library    SeleniumLibrary
-Library    ../Resources/TestDataLibrary.py       
-Library    String    
+Library    ../Resources/TestDataLibrary.py
+Library    String
 
 
 *** Variables ***
@@ -26,17 +26,17 @@ Verify Product Details
         ${found}    Evaluate    """${details}[price]""" in """${text}"""
         IF    ${found} == ${TRUE}
             Exit For Loop
-        END      
+        END
     END
     Should Be True    ${found}
 
 Add Found ${product} To Cart
-    [Documentation]    Add found product to the shopping cart   
-    Click Element    ${ADD_TO_CART} 
-    ${product_full_name}    Get Text     ${FOUND_HEADER} 
+    [Documentation]    Add found product to the shopping cart
+    Click Element    ${ADD_TO_CART}
+    ${product_full_name}    Get Text     ${FOUND_HEADER}
     Wait Until Element Contains    ${SUCCESS_ALERT}
     ...    Success: You have added ${product_full_name} to your shopping cart!
-    
+
 Select Found ${product}
     [Documentation]    Select found product
     ${details}    Get Test Product Details    ${product}

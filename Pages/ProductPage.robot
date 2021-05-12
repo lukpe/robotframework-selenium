@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Product page
 Library    SeleniumLibrary
-Library    ../Resources/TestDataLibrary.py      
+Library    ../Resources/TestDataLibrary.py
 
 
 *** Variables ***
@@ -16,8 +16,8 @@ Verify ${product} Page
     ${details}    Get Test Product Details    ${product}
     Element Should Contain    ${PRODUCT_HEADER}    ${details}[name]
     Element Should Contain    ${PRODUCT_PRICE}    ${details}[price]
-    
+
 Add Product To Cart
     [Documentation]    Add the product to cart
     Wait Until Element Is Enabled    ${PRODUCT_TO_CART}
-    Click Button    ${PRODUCT_TO_CART}            
+    Click Button    ${PRODUCT_TO_CART}
