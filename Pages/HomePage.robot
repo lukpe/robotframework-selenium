@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Home page
 Library    SeleniumLibrary
-Library    ../Resources/TestDataLibrary.py           
+Library    ../Resources/TestDataLibrary.py
 Resource    SearchResultsPage.robot
 
 
@@ -19,20 +19,20 @@ ${CATEGORY_HEADER}    css:h2
 *** Keywords ***
 Check Homepage Elements
     [Documentation]    Check critical homepage elements
-    Page Should Contain    ${PAGE_HEADER}    
+    Page Should Contain    ${PAGE_HEADER}
     Page Should Contain Element    ${CART}
-    Page Should Contain Element    ${NAV_BAR}    
+    Page Should Contain Element    ${NAV_BAR}
     Page Should Contain Element    ${SEARCH_BAR}
 
 Search ${product}
     [Documentation]    Search for a product
     ...                (The product type argument is optional)
-    ${details}    Get Test Product Details    ${product}    
+    ${details}    Get Test Product Details    ${product}
     Input Text    ${SEARCH_BAR}    ${details}[name]
     Click Button    ${SEARCH_BUTTON}
     Wait Until Page Contains    Search - ${details}[name]
     Verify Product Details    ${product}
-    
+
 Select Category
     [Documentation]    Select product category
     [Arguments]    ${name}
@@ -44,6 +44,6 @@ Select Category
         IF    ${found}
             Click Element    ${category}
         END
-        Exit For Loop If    ${found}       
+        Exit For Loop If    ${found}
     END
     Should Be True    ${found}
