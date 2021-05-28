@@ -1,4 +1,5 @@
-import os, platform
+import os
+import platform
 from robot.api.deco import keyword
 
 
